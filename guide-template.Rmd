@@ -1,0 +1,218 @@
+---
+title: "Species ID Guide Template"
+author: "Cole Brookson"
+date: "10/13/2021"
+output:
+    pdf_document:
+        includes:
+            in_header: file.tex
+---
+
+\newpage
+
+# *Eubalaena australis* (Southern right whale)
+
+## Description
+
+These stocky whales have extremely large heads, which can be over one-fourth of the body length. The mouthline is bowed and the rostrum is arched. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. 
+
+\newpage 
+
+## Figures
+
+```{r southern-right-whale, fig.align = 'left', out.width = "50%", out.height = "30%", fig.cap = "This is the southern right whale, figure is centered.", fig.cap.align = 'left', echo=FALSE}
+knitr::include_graphics(here::here("images", "southern-right.png"))
+```
+
+```{r southern-right-whale-skull, fig.align = 'left', out.width = "50%", out.height = "30%",fig.cap = "This is the skull of the southern right whale skull (dorsal view), figure is left-aligned.", echo=FALSE}
+knitr::include_graphics(here::here("images", "southern-right-skull.png"))
+```
+
+```{r southern-right-whale-skull-lateral, fig.align = 'left', out.width = "50%", out.height = "30%",fig.cap = "This is the skull of the southern right whale skull (lateral view), figure is left-aligned.", echo=FALSE}
+knitr::include_graphics(here::here("images", "southern-right-skull-lateral.png"))
+```
+
+\newpage 
+
+## Questions
+
+1. Very interesting and useful question 
+2. Another wildly helpful question
+3. A third, MOST fascinating question
+
+# *Balaena mysticetus* (Bowhead whale)
+
+## Description
+
+Bowhead whales are very rotund, but often have a distinct "neck" region. The head is large... Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. Text text text text. **Bold text bold text bold text.** *Italicized text italicized text italicized text*. 
+
+\newpage 
+
+## Figures
+
+```{r bowhead-whale, fig.align = 'centered', out.width = "50%", out.height = "30%", fig.cap = "This is the bowhead whale, figure is centered.", echo=FALSE}
+knitr::include_graphics(here::here("images", "bowhead.png"))
+```
+
+```{r bowhead-whale-skull, fig.align = 'centered', out.width = "50%", out.height = "30%", fig.cap = "This is the skull of the bowhead whale skull, figure is centered.", echo=FALSE}
+knitr::include_graphics(here::here("images", "bowhead-skull.png"))
+```
+
+```{r bowhead-whale-skull-lateral, fig.align = 'centered', out.width = "50%", out.height = "30%", fig.cap = "This is the skull of the bowhead whale skull, figure is centered.", echo=FALSE}
+knitr::include_graphics(here::here("images", "bowhead-skull-lateral.png"))
+```
+
+\newpage 
+
+## Questions
+
+1. Very interesting and useful question 
+2. Another wildly helpful question
+3. A third, MOST fascinating question
+
+\newpage
+
+
+# Supplemental Information
+
+```{r, message = FALSE, echo = FALSE}
+library(tidyverse)
+library(here)
+library(knitr)
+library(kableExtra)
+
+whale_table = read_csv(here("./data/whale-table.csv"))
+
+
+```
+
+## Figures
+
+```{r, echo = FALSE, fig.cap= "Whale length and whale weight compared by species", message = FALSE, out.width = "50%", out.height = "50%"}
+
+whale_data = read_csv(here("./data/whale-size-data.csv"))
+whale_plot = ggplot(data = whale_data) +
+  geom_point(aes(x = length, y = weight, fill = species), 
+             colour = "black", 
+             size = 3, 
+             shape = 21) +
+  theme_bw() +
+  labs(x = "Whale Length", y = "Whale Weight")
+whale_plot
+```
+
+```{r}
+# load the packages
+library(kableExtra)
+library(knitr)
+library(tidyverse)
+library(here)
+
+# read in the data
+ex_table = read_csv(here("./data/example.csv"))
+# check it's in data.frame() from not just tbl form
+ex_table=data.frame(ex_table)
+
+#write custom function to display the table how we want
+knit_table = function(df){
+  
+  df = data.frame(apply(df, function(x){gsub("<br>", "\n", x)}),
+    stringsAsFactors = FALSE)
+  
+  
+  df %>% 
+    mutateall(linebreak) %>% 
+    kable("latex", 
+          booktabs = TRUE, 
+          escape = FALSE, 
+          longtable = TRUE) %>% 
+    kable_styling(latex_options = "scale_down", 
+                  full_width = FALSE,) %>% 
+    column_spec(1, width = "5em") %>% 
+    column_spec(2, width = "5em") %>% 
+    column_spec(3, width = "5em") %>% 
+    column_spec(4, width = "5em") %>% 
+    column_spec(5, width = "5em") %>% 
+    column_spec(7, width = "20em") 
+}
+
+knit_table = function(df){
+    df = data.frame(lapply(df, function(x) {gsub("<br>", "\n", x)}), stringsAsFactors = F)
+
+  df %>% 
+    mutate_all(linebreak) %>% 
+    kable("latex", 
+          booktabs = TRUE, 
+          escape = FALSE, 
+          longtable = FALSE) %>% 
+    kable_styling(latex_options = "scale_down", 
+                  full_width = FALSE)  %>% 
+    column_spec(1, width = "5em") %>% 
+    column_spec(2, width = "5em") %>% 
+    column_spec(3, width = "5em") %>% 
+    column_spec(4, width = "5em") %>% 
+    column_spec(5, width = "5em") %>% 
+    column_spec(7, width = "20em")
+}
+
+knit_table(whale_table)
+
+
+
+```
+
+```{html}
+ <table>
+  <tr>
+    <th>Company</th>
+    <th>Contact</th>
+    <th>Country</th>
+  </tr>
+  <tr>
+    <td>Alfreds Futterkiste</td>
+    <td>Maria Anders</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>Centro comercial Moctezuma</td>
+    <td>Francisco Chang</td>
+    <td>Mexico</td>
+  </tr>
+</table> 
+```
+
+
+```{r}
+# library(dplyr)
+# library(knitr)
+# library(kableExtra)
+# 
+# knit_table <- function(df){
+#   if (is_html_output()) {
+#     df %>%
+#       kable("html", escape = F) %>%
+#       kable_styling()
+#   } else {
+#     df <- data.frame(lapply(df, function(x) {gsub("<br>", "\n", x)}), stringsAsFactors = F)
+# 
+#     df %>%  
+#       mutate_all(linebreak) %>%
+#       kable("latex", booktabs = T, escape = F)  
+#   }
+# }
+# 
+# df1 <- data.frame(col1 = c("a", "b"),
+#                   col2 = c("one<br>two", "three<br>four"))
+# 
+# knit_table(df1)
+
+```
+
+
+```{r}
+# library(pander)
+# library(descr)
+# pander::pander(descr::CrossTable(mtcars$am, mtcars$gear))
+```
+
+
